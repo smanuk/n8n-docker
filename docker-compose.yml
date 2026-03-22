@@ -1,6 +1,9 @@
 services:
   traefik:
     image: "traefik"
+    environment:
+      - CF_API_EMAIL=n8n@example.com
+      - CF_DNS_API_TOKEN=<add in when added to server>
     restart: always
     command:
       - "--api.insecure=true"
