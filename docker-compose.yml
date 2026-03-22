@@ -1,9 +1,6 @@
 services:
   traefik:
     image: "traefik"
-    environment:
-      - CF_API_EMAIL=n8n@manikiam.net
-      - CF_DNS_API_TOKEN=<add in when added to server>
     restart: always
     command:
       - "--api.insecure=true"
@@ -13,11 +10,9 @@ services:
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
       - "--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}"
       - "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json"
-      - "--certificatesresolvers.mytlschallenge.acme.dnschallenge=true"
-      - "--certificatesresolvers.mytlschallenge.acme.dnschallenge.provider=cloudflare"
-      - "--certificatesresolvers.mytlschallenge.acme.email=n8n@manikiam.net
     ports:
       - "80:80"
       - "443:443"
@@ -62,4 +57,3 @@ services:
 volumes:
   n8n_data:
   traefik_data:
-  
